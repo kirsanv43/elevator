@@ -9,7 +9,6 @@ export default class ElevatorPanel extends React.Component {
   };
 
   handleButtonClick = (e, level) => {
-    console.log(elevator);
     this.props.dispatch(elevator.pushButton(level));
   }
 

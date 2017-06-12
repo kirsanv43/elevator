@@ -7,6 +7,7 @@ const initState = new Map({
   state: 'stay',
   direction: 1,
   doorsIsOpen: false,
+  maxLevel: 5,
 });
 
 export default function (state = initState, action) {

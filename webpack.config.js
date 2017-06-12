@@ -7,6 +7,7 @@ var autoprefixer = require('autoprefixer');
 var SvgStore = require('webpack-svgstore-plugin');
 
 module.exports = {
+  devtool: 'eval',
   context: __dirname,
   entry: [
     './src/index.js',
