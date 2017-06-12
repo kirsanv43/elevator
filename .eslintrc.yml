@@ -1,6 +1,10 @@
 installedESLint: true
 parser: babel-eslint
 extends: airbnb
+settings:
+  import/resolver:
+    webpack:
+      config: 'webpack.config.js'
 env:
   browser: true
 plugins:
@@ -15,3 +19,4 @@ rules:
   react/prop-types: 1
   react/react-in-jsx-scope: 0
   react/jsx-filename-extension: 0
+  no-underscore-dangle: ["error", { "allow": ["__REDUX_DEVTOOLS_EXTENSION__"] }]

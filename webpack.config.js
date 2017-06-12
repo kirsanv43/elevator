@@ -7,38 +7,38 @@ var autoprefixer = require('autoprefixer');
 var SvgStore = require('webpack-svgstore-plugin');
 
 module.exports = {
-  context: __dirname + '/assets',
+  context: __dirname,
   entry: [
-    './index.js',
-    'file?name=../index.html!slm!./index.slim'
+    './src/index.js',
+    'file?name=../index.html!slm!./assets/index.slim',
   ],
   output: {
     path: __dirname + '/builds',
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   module: {
     loaders: [
       {
-        test:   /\.scss$/,
+        test: /\.scss$/,
         loader: 'style!css?sourceMap!postcss!sass?sourceMap',
-        include: __dirname + '/assets/scss'
+        include: __dirname + '/assets/scss',
       },
       {
-        test:   /\.js$/,
-        include: __dirname + '/assets',
+        test: /\.js$/,
+        include: __dirname + '/src',
         loader: 'babel',
         query: {
           presets: ['es2015', 'react'],
-          plugins: ['transform-class-properties']
+          plugins: ['transform-class-properties', 'transform-object-rest-spread', 'transform-decorators-legacy'],
         },
       },
       {
         test: /\.font\.ya?ml$/,
         include: __dirname + '/assets/fonts',
-        loader: ExtractTextPlugin.extract('style', 'css!csso!fontgen?embed!json!yaml')
+        loader: ExtractTextPlugin.extract('style', 'css!csso!fontgen?embed!json!yaml'),
       },
       {
-        test:   /\.png$/,
+        test: /\.png$/,
         include: __dirname + '/assets/images',
         loader: 'file',
       },
@@ -52,41 +52,48 @@ module.exports = {
           }),
           'svgo-loader?' + JSON.stringify({
             plugins: [
-              {removeTitle: true},
-              {convertColors: {shorthex: false}},
-              {convertPathData: false}
-            ]
-          })
-        ]
-      }
-    ]
+              { removeTitle: true },
+              { convertColors: { shorthex: false } },
+              { convertPathData: false },
+            ],
+          }),
+        ],
+      },
+    ],
+  },
+  resolve: {
+    alias: {
+      actions: path.resolve(__dirname, './src/redux/actions'),
+      const: path.resolve(__dirname, './src/redux/const'),
+    },
   },
   sassLoader: {
     includePaths: [
-      path.join(__dirname, 'node_modules/bootstrap-sass/assets/stylesheets')
-    ]
+      path.join(__dirname, 'node_modules/bootstrap-sass/assets/stylesheets'),
+    ],
   },
-  postcss: function () {
+  postcss() {
     return [autoprefixer({
-      browsers: ['last 3 versions']
+      browsers: ['last 3 versions'],
     })];
   },
   csso: {
     restructure: true,
-    comments: true
+    comments: true,
   },
   plugins: [
     new webpack.ProvidePlugin({
       $: 'jquery',
       React: 'react',
+      PropTypes: 'prop-types',
     }),
     new BrowserSyncPlugin({
       host: 'localhost',
       port: 8080,
-      server: { baseDir: [''] }
-    })
+      server: { baseDir: [''] },
+    }),
   ],
   devServer: {
     hot: true,
-  }
+  },
 };

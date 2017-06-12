@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "start": "webpack -w",
+    "dev": "webpack --watch",
     "build": "svgo assets/fonts/icons; webpack"
   },
   "author": {
@@ -12,14 +13,21 @@
   },
   "license": "UNLICENSED",
   "dependencies": {
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "classnames": "^2.2.5",
     "connect": "^3.4.1",
     "css-loader": "^0.23.1",
+    "eslint-import-resolver-webpack": "^0.8.1",
+    "immutable": "^3.8.1",
     "jquery": "^3.1.0",
     "node-sass": "^3.4.2",
+    "prop-types": "^15.5.10",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
-    "react-redux": "^4.4.5",
+    "react-redux": "^5.0.5",
     "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0",
     "sass-loader": "^3.2.0",
     "serve-static": "^1.10.2",
     "style-loader": "^0.13.1"
