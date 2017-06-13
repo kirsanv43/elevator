@@ -11,12 +11,12 @@ export default class FloorPanel extends React.Component {
 
   handleUpClick = () => {
     const { dispatch, level } = this.props;
-    dispatch(floor.Up(level));
+    dispatch(floor.up(level));
   }
 
   handleDownClick = () => {
     const { dispatch, level } = this.props;
-    dispatch(floor.Down(level));
+    dispatch(floor.down(level));
   }
 
   render() {

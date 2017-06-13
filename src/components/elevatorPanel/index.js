@@ -6,6 +6,7 @@ export default class ElevatorPanel extends React.Component {
   static propTypes = {
     currentLevel: PropTypes.number,
     activeButtons: PropTypes.object,
+    dispatch: PropTypes.func,
   };
 
   handleButtonClick = (e, level) => {

@@ -1,15 +1,15 @@
 import cn from 'classnames';
 
-const ElevatorButton = ({ level, onClick, currentLevel, activeButtons }) => {
-  return (
-    <div
-      className={cn('elevator__button', { 'elevator__button--active': activeButtons.has(level) && currentLevel !== level })}
-      onClick={(e) => onClick(e, level)}
-    >
+const ElevatorButton = ({ level, onClick, currentLevel, activeButtons }) => (
+  <div
+    className={cn('elevator__button', {
+      'elevator__button--active': activeButtons.has(level) && currentLevel !== level,
+    })}
+    onClick={(e) => onClick(e, level)}
+  >
         {level}
-    </div>
-  );
-};
+  </div>
+);
 
 ElevatorButton.propTypes = {
   currentLevel: PropTypes.number,
