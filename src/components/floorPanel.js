@@ -5,6 +5,7 @@ import { floor } from 'actions';
 @connect((state, props) => ({
   upIsActive: state.floor.get('up').has(props.level),
   downIsActive: state.floor.get('down').has(props.level),
+  maxLevel: state.elevator.get('maxLevel'),
 }))
 export default class FloorPanel extends React.Component {
 
@@ -19,22 +20,24 @@ export default class FloorPanel extends React.Component {
   }
 
   render() {
-    const { upIsActive, downIsActive, level } = this.props;
+    const { upIsActive, downIsActive, level, maxLevel } = this.props;
     return (
       <div className="elevator__panel">
-        <div
+        <button
+          disabled={level === maxLevel}
           onClick={this.handleUpClick}
           className={cn('elevator__button elevator__button--lg', { 'elevator__button--active': upIsActive })}
         >
           up
-        </div>
+        </button>
         <br />
-        <div
+        <button
+          disabled={level === 1}
           onClick={this.handleDownClick}
           className={cn('elevator__button elevator__button--lg', { 'elevator__button--active': downIsActive })}
         >
           down
-        </div>
+        </button>
       </div>);
   }
 }

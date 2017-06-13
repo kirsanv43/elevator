@@ -91,7 +91,7 @@ body {
 
   &__button {
     $button-size: 20px;
-
+    padding: 0;
     display: inline-block;
     width: $button-size;
     height: $button-size;
@@ -117,6 +117,9 @@ body {
     &:active {
       transform: translateY(1px);
       box-shadow: none;
+    }
+    &:disabled {
+      background-color: #7a7a7a;
     }
 
     &--lg {

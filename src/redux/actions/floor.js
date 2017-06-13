@@ -8,7 +8,7 @@ const anyButtonOnFloorIsPushed = (floor) => {
 const moveIfStay = (dispatch, getState) => {
   const { elevator, floor } = getState();
 
-  if ((elevator.get('state') !== 'moving' && !elevator.get('activeButtons').size) && anyButtonOnFloorIsPushed(floor)) {
+  if ((elevator.get('state') !== 'moving' && !elevator.get('activeButtons').size) && !anyButtonOnFloorIsPushed(floor)) {
     setTimeout(() => { dispatch(move()); }, 1000);
   }
 };
@@ -17,8 +17,8 @@ const moveIfStay = (dispatch, getState) => {
 export const Up = (level) => (dispatch, getState) => {
   const state = getState();
   if (!state.floor.get('up').has(level)) {
-    dispatch({ type: floorConst.PUSH_UP_BUTTON, level });
     moveIfStay(dispatch, getState);
+    dispatch({ type: floorConst.PUSH_UP_BUTTON, level });
   }
 };
 
@@ -26,7 +26,7 @@ export const Up = (level) => (dispatch, getState) => {
 export const Down = (level) => (dispatch, getState) => {
   const state = getState();
   if (!state.floor.get('up').has(level)) {
-    dispatch({ type: floorConst.PUSH_DOWN_BUTTON, level });
     moveIfStay(dispatch, getState);
+    dispatch({ type: floorConst.PUSH_DOWN_BUTTON, level });
   }
 };

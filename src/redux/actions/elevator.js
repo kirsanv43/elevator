@@ -10,7 +10,6 @@ export const pushButton = (level) => (dispatch, getState) => {
   }
   if ((state.elevator.get('state') !== 'moving' && !state.elevator.get('activeButtons').size)
 || state.floor.get('up').size || state.floor.get('down').size) {
-    console.log('pushButton move');
     setTimeout(() => { dispatch(move()); }, 1000);
   }
   dispatch({ type: elevator.PUSH_BUTTON_IN_ELEVATOR, level });
@@ -54,9 +53,6 @@ const needMoveToUp = (activeButtons, currentLevel, maxLevel, up, down) => {
   if (activeButtons.some(item => item > currentLevel)) {
     return true;
   }
-  if (currentLevel !== maxLevel) {
-    return true;
-  }
 
   if (up.some((item) => item > currentLevel) || down.some((item) => item > currentLevel)) {
     return true;
@@ -71,10 +67,6 @@ const needMoveToDown = (activeButtons, currentLevel, maxLevel, up, down) => {
     return true;
   }
 
-  if (currentLevel !== 1) {
-    return true;
-  }
-
   if (up.some((item) => item < currentLevel) || down.some((item) => item < currentLevel)) {
     return true;
   }
@@ -83,7 +75,6 @@ const needMoveToDown = (activeButtons, currentLevel, maxLevel, up, down) => {
 };
 
 export const move = () => (dispatch, getState) => {
-  console.log('move');
   const state = getState();
   const direction = state.elevator.get('direction');
   const currentLevel = state.elevator.get('currentLevel');
@@ -99,17 +90,17 @@ export const move = () => (dispatch, getState) => {
   }
   if (elevatorState !== 'moving') dispatch(changeState('moving'));
 
-  const isSomeoneWantToGoUp = (up.size === 1 && up.has(currentLevel));
-  const isSomeoneWantToGoDown = (down.size === 1 && down.has(currentLevel));
+  const isSomeoneOnFloorPushUpButton = (up.size === 1 && up.has(currentLevel));
+  const isSomeoneOnFloorPushDownButton = (down.size === 1 && down.has(currentLevel));
 
   if (direction > 0) {
     if (needMoveToUp(activeButtons, currentLevel, maxLevel, up, down)) {
       dispatch(changeLevel(currentLevel + direction));
     } else if ((activeButtons.size === 1 && activeButtons.has(currentLevel)) ||
-isSomeoneWantToGoUp ||
-isSomeoneWantToGoDown
+isSomeoneOnFloorPushUpButton ||
+isSomeoneOnFloorPushDownButton
    ) {
-      dispatch(openElevatorDoors(isSomeoneWantToGoUp, isSomeoneWantToGoDown, currentLevel));
+      dispatch(openElevatorDoors(isSomeoneOnFloorPushUpButton, isSomeoneOnFloorPushDownButton, currentLevel));
     }
      else {
       dispatch(changeDirection(-1));
@@ -119,10 +110,10 @@ isSomeoneWantToGoDown
     if (needMoveToDown(activeButtons, currentLevel, maxLevel, up, down)) {
       dispatch(changeLevel(currentLevel + direction));
     } else if ((activeButtons.size === 1 && activeButtons.has(currentLevel)) ||
-isSomeoneWantToGoUp ||
-isSomeoneWantToGoDown
+isSomeoneOnFloorPushUpButton ||
+isSomeoneOnFloorPushDownButton
    ) {
-      dispatch(openElevatorDoors(isSomeoneWantToGoUp, isSomeoneWantToGoDown, currentLevel));
+      dispatch(openElevatorDoors(isSomeoneOnFloorPushUpButton, isSomeoneOnFloorPushDownButton, currentLevel));
     } else {
       dispatch(changeDirection(1));
       dispatch(move());
