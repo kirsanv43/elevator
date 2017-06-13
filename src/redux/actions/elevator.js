@@ -23,8 +23,8 @@ export const changeLevel = (level) => (dispatch, getState) => {
   const up = state.floor.get('up');
   const down = state.floor.get('down');
   dispatch({ type: elevator.CHANGE_ELEVATOR_LEVEL, level });
-  const isSomeoneWantToGoUp = (direction > 0 && up.some(item => item === level));
-  const isSomeoneWantToGoDown = (direction < 0 && down.some(item => item === level));
+  const isSomeoneWantToGoUp = ((direction > 0 || (direction < 0 && level === 1)) && up.some(item => item === level));
+  const isSomeoneWantToGoDown = (direction < 0 || (direction > 0 && level === 5)) && down.some(item => item === level);
   if (activeButtons.has(level) || isSomeoneWantToGoUp || isSomeoneWantToGoDown) {
     setTimeout(() => {
       dispatch(changeState('stay'));

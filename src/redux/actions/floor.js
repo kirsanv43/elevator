@@ -14,7 +14,7 @@ const moveIfStay = (dispatch, getState) => {
 };
 
 
-export const Up = (level) => (dispatch, getState) => {
+export const up = (level) => (dispatch, getState) => {
   const state = getState();
   if (!state.floor.get('up').has(level)) {
     moveIfStay(dispatch, getState);
@@ -23,7 +23,7 @@ export const Up = (level) => (dispatch, getState) => {
 };
 
 
-export const Down = (level) => (dispatch, getState) => {
+export const down = (level) => (dispatch, getState) => {
   const state = getState();
   if (!state.floor.get('up').has(level)) {
     moveIfStay(dispatch, getState);
